@@ -30,7 +30,7 @@ function Login() {
                 return;
             }
 
-            navigate("/dashboard");
+            navigate("/");
         } catch (err) {
             console.log(err);
             toast("error", "Fehler beim Einloggen")
