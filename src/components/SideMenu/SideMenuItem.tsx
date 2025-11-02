@@ -1,24 +1,25 @@
 import type { MenuItem } from "../../types/Menu.ts";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 type Props = {
     item: MenuItem;
+    collapsed: boolean;
 }
 
-export default function SideMenuItem({ item }: Props) {
+export default function SideMenuItem({ item, collapsed }: Props) {
     return (
         <li>
-            <Link to={item.path} className="flex items-center gap-2 p-2 hover:bg-amber-100 rounded">
+            <NavLink
+                to={item.path}
+                className={({ isActive }) =>
+                    `flex items-center gap-2 p-2 rounded hover:bg-gray-700 ${
+                        isActive ? "bg-gray-600" : ""
+                    }`
+                }
+            >
                 {item.icon}
-                {item.label}
-            </Link>
-            {item.children && (
-                <ul className="ml-4">
-                    {item.children.map((child) => (
-                        <SideMenuItem key={child.path} item={child} />
-                    ))}
-                </ul>
-            )}
+                {!collapsed && <span>{item.label}</span>}
+            </NavLink>
         </li>
     )
 }
