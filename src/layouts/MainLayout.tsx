@@ -8,7 +8,7 @@ export default function MainLayout() {
                 <SideMenu />
             </aside>
 
-            <main className="flex-1 p-6 bg-gray-100">
+            <main className="flex-1 p-6 bg-gray-600">
                 <Outlet />
             </main>
         </div>

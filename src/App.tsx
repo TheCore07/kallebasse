@@ -5,6 +5,7 @@ import { ToastProvider } from "./context/ToastProvider.tsx";
 import MainLayout from "./layouts/MainLayout.tsx";
 import AuthLayout from "./layouts/AuthLayout.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Changelog from "./pages/misc/Changelog.tsx";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
 
                 <Route path="/" element={<MainLayout />}>
                     <Route index element={<Dashboard />} />
+                    <Route path="/changelog" element={<Changelog />} />
                 </Route>
 
                 <Route path="*" element={<NotFound/>} />

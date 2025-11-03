@@ -4,5 +4,10 @@ export type MenuItem = {
     label: string;
     path: string;
     icon?: ReactNode;
-    children?: MenuItem[];
+}
+
+export type ProfileMenuItem = {
+    label: string;
+    action: () => void;
+    icon?: ReactNode;
 }
