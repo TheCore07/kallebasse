@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { EyeSlashIcon, EyeIcon} from "@heroicons/react/24/outline";
+import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/outline";
 import Toggle from "../../components/Toggle.tsx";
 import { useNavigate } from "react-router-dom";
-import * as React from "react";
 import { useToast } from "../../context/useToast.ts";
+import { useAuth } from "../../context/AuthContext.tsx";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -12,30 +12,19 @@ function Login() {
     const [stayLoggedIn, setStayLoggedIn] = useState(false);
     const navigate = useNavigate();
     const toast = useToast();
+    const { login } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
-            const res = await fetch("/api/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-                body: JSON.stringify({ email, password, stayLoggedIn})
-            })
-
-            if (!res.ok) {
-                const errData = await res.json();
-                toast("error", errData.message || "Login fehlgeschlagen")
-                return;
-            }
-
+            await login(email, password, stayLoggedIn);
+            toast("success", "Erfolgreich eingeloggt!");
             navigate("/");
-        } catch (err) {
-            console.log(err);
-            toast("error", "Fehler beim Einloggen")
+        } catch (err: any) {
+            toast("error", err.message || "Login fehlgeschlagen");
         }
-    }
+    };
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-900">
@@ -89,11 +78,12 @@ function Login() {
                         </div>
                     </div>
 
-                    <div
-                        className="flex items-center justify-between"
-                    >
+                    <div className="flex items-center justify-between">
                         <span className="text-gray-300 font-medium">Eingeloggt bleiben?</span>
-                        <Toggle enabled={stayLoggedIn} onChange={() => setStayLoggedIn(!stayLoggedIn)} />
+                        <Toggle
+                            enabled={stayLoggedIn}
+                            onChange={() => setStayLoggedIn(!stayLoggedIn)}
+                        />
                     </div>
 
                     <button
