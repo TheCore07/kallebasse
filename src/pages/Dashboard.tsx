@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import type { User } from "../types/User.ts";
 import { useToast } from "../context/useToast.ts";
+import { useAuth } from "../context/AuthContext.tsx";
 
 function Dashboard() {
     const [users, setUsers] = useState<User[]>([]);
+    const { user } = useAuth();
     const toast = useToast();
+
+    console.log(user);
+
 
     useEffect(() => {
         fetch('/api/users')

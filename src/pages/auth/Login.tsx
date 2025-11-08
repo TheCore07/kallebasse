@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/outline";
-import Toggle from "../../components/Toggle.tsx";
+// import Toggle from "../../components/Toggle.tsx";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../../context/useToast.ts";
 import { useAuth } from "../../context/AuthContext.tsx";
+import * as React from "react";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [stayLoggedIn, setStayLoggedIn] = useState(false);
+    // const [stayLoggedIn, setStayLoggedIn] = useState(false);
     const navigate = useNavigate();
     const toast = useToast();
     const { login } = useAuth();
@@ -18,11 +19,11 @@ function Login() {
         e.preventDefault();
 
         try {
-            await login(email, password, stayLoggedIn);
+            await login(email, password);
             toast("success", "Erfolgreich eingeloggt!");
             navigate("/");
-        } catch (err: any) {
-            toast("error", err.message || "Login fehlgeschlagen");
+        } catch {
+            toast("error", "Login fehlgeschlagen");
         }
     };
 
@@ -78,13 +79,13 @@ function Login() {
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-between">
-                        <span className="text-gray-300 font-medium">Eingeloggt bleiben?</span>
-                        <Toggle
-                            enabled={stayLoggedIn}
-                            onChange={() => setStayLoggedIn(!stayLoggedIn)}
-                        />
-                    </div>
+                    {/*<div className="flex items-center justify-between invisible" >*/}
+                    {/*    <span className="text-gray-300 font-medium">Eingeloggt bleiben?</span>*/}
+                    {/*    <Toggle*/}
+                    {/*        enabled={stayLoggedIn}*/}
+                    {/*        onChange={() => setStayLoggedIn(!stayLoggedIn)}*/}
+                    {/*    />*/}
+                    {/*</div>*/}
 
                     <button
                         type="submit"

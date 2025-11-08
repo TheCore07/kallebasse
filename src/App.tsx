@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound.tsx";
 import Changelog from "./pages/misc/Changelog.tsx";
 import Loading from "./pages/Loading.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
+import Ticket from "./pages/misc/Ticket.tsx";
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                     <Route path="/" element={<MainLayout />}>
                         <Route index element={<Dashboard />} />
                         <Route path="/changelog" element={<Changelog />} />
+                        <Route path="/tickets" element={<Ticket />} />
                     </Route>
 
                     <Route path="/loading" element={<Loading/>}/>
