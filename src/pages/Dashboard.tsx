@@ -20,6 +20,7 @@ function Dashboard() {
     return (
         <>
 
+            <h1>👋Hallo {user?.name}👋</h1>
             <h1 className="">Users</h1>
             <ul>
                 {users.map(u => (

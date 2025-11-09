@@ -15,7 +15,7 @@ export default function SideMenu() {
         >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-gray-700">
-                {!collapsed && <h1 className="text-lg font-bold">KalleBasse</h1>}
+                {!collapsed && <h1 className="text-lg font-bold">TrackaTime</h1>}
                 <button
                     className="p-1 hover:bg-gray-700 rounded"
                     onClick={() => setCollapsed(!collapsed)}

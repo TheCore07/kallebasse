@@ -4,6 +4,13 @@ export const AppConf = {
     AppVersion: "v2025.11.1",
     Changelog: [
         {
+            version: "2025.11.2",
+            date: "2025-11-14",
+            changes: [
+                "Added Tickets for easier Bug Reports",
+            ]
+        },
+        {
             version: "2025.11.1",
             date: "2025-11-03",
             changes: [

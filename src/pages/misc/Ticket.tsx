@@ -1,17 +1,19 @@
 import { TicketIcon } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
 import type {Ticket} from "../../types/Ticket.ts";
+import {useEffect, useState} from "react";
 
 export default function Ticket() {
-    const tickets: Ticket[] = [{
-        _id: "awdawdsadwa",
-        creator_name: "testnema",
-        title: "testtitle",
-        createdAt: "08-11-2025",
-        creator_id: "creator_id",
-        status: "Done",
-        description: "Anmeldefehler"
-    }];
+    const [tickets, setTickets] = useState<Ticket[]>([]);
+
+    useEffect(() => {
+        fetch('/api/tickets', {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+        }).then(res => res.json())
+        .then(data => setTickets(data));
+    }, [])
 
     return (
         <>
