@@ -41,55 +41,57 @@ export function AppSidebar() {
                 </SidebarGroup>
             </SidebarContent>
             <SidebarFooter className="border-t border-gray-700">
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button
-                            variant="ghost"
-                            className="w-full justify-start gap-3 p-3 h-auto"
-                        >
-                            <Avatar className="h-8 w-8">
-                                <AvatarImage src={user.avatar} alt={user.name} />
-                                <AvatarFallback>
-                                    <CircleUserRound className="h-4 w-4" />
-                                </AvatarFallback>
-                            </Avatar>
-                            <div className="flex flex-col text-left">
-                                <span className="text-sm font-medium leading-none">{user.name}</span>
-                                <span className="text-xs text-muted-foreground truncate">
-                  {user.email}
-                </span>
-                            </div>
-                        </Button>
-                    </DropdownMenuTrigger>
+                {user && (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                variant="ghost"
+                                className="w-full justify-start gap-3 p-3 h-auto"
+                            >
+                                <Avatar className="h-8 w-8">
+                                    <AvatarImage alt={user.name} />
+                                    <AvatarFallback>
+                                        <CircleUserRound className="h-4 w-4" />
+                                    </AvatarFallback>
+                                </Avatar>
+                                <div className="flex flex-col text-left">
+                                    <span className="text-sm font-medium leading-none">{user.name}</span>
+                                    <span className="text-xs text-muted-foreground truncate">
+                                        {user.email}
+                                    </span>
+                                </div>
+                            </Button>
+                        </DropdownMenuTrigger>
 
-                    <DropdownMenuContent side="top" align="start" className="w-56">
-                        <DropdownMenuLabel className="flex flex-col">
-                            <span>{user.name}</span>
-                            <span className="text-xs text-muted-foreground">{user.email}</span>
-                        </DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={() => navigate("/profile")}>
-                            <User className="mr-2 h-4 w-4" />
-                            Account
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <CreditCard className="mr-2 h-4 w-4" />
-                            Billing
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <Bell className="mr-2 h-4 w-4" />
-                            Notifications
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                            className="text-destructive focus:text-destructive"
-                            onClick={() => console.log("logout")}
-                        >
-                            <LogOut className="mr-2 h-4 w-4" />
-                            Log out
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                        <DropdownMenuContent side="top" align="start" className="w-56">
+                            <DropdownMenuLabel className="flex flex-col">
+                                <span>{user.name}</span>
+                                <span className="text-xs text-muted-foreground">{user.email}</span>
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => navigate("/profile")}>
+                                <User className="mr-2 h-4 w-4" />
+                                Account
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <CreditCard className="mr-2 h-4 w-4" />
+                                Billing
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Bell className="mr-2 h-4 w-4" />
+                                Notifications
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                                className="text-destructive focus:text-destructive"
+                                onClick={() => console.log("logout")}
+                            >
+                                <LogOut className="mr-2 h-4 w-4" />
+                                Log out
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                )}
             </SidebarFooter>
         </Sidebar>
     )

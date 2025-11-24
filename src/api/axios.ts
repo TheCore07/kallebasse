@@ -2,8 +2,13 @@ import axios, { AxiosError } from "axios";
 import type { AxiosRequestConfig } from "axios";
 import { refresh } from "./auth";
 
+type FailedRequest = {
+    resolve: (value?: unknown) => void;
+    reject: (reason?: unknown) => void;
+};
+
 let isRefreshing = false;
-let failedQueue: { resolve: (value?: any) => void; reject: (reason?: any) => void }[] = [];
+let failedQueue: FailedRequest[] = [];
 let interceptorRegistered = false;
 
 export const api = axios.create({
@@ -11,7 +16,7 @@ export const api = axios.create({
     withCredentials: true,
 });
 
-export const setupAxiosInterceptors = (logout: () => void) => {
+export const setupAxiosInterceptors = () => {
     if (interceptorRegistered) return;
     interceptorRegistered = true;
 
