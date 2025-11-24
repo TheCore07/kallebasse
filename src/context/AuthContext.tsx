@@ -45,7 +45,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     useEffect(() => {
-        setupAxiosInterceptors(logout); // nur einmal
+        setupAxiosInterceptors(); // nur einmal
         refreshUser();
     }, []);
 
