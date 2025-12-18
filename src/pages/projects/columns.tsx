@@ -22,6 +22,11 @@ export const columns = (
     {
         accessorKey: "description",
         header: "Beschreibung",
+        cell: ({ getValue }) => (
+            <div className="truncate max-w-[400px]">
+                {getValue<string>()}
+            </div>
+        )
     },
     {
         id: "actions",
@@ -29,42 +34,44 @@ export const columns = (
             const project = row.original;
 
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button
-                            variant="ghost"
-                            className="h-8 w-8 p-0 hover:bg-gray-700"
+                <div className="flex justify-end">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                variant="ghost"
+                                className="h-8 w-8 p-0 cursor-pointer"
+                            >
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+
+                        <DropdownMenuContent
+                            align="end"
+                            className="bg-gray-800 text-gray-100 border border-gray-700"
                         >
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
+                            <DropdownMenuLabel>Aktionen</DropdownMenuLabel>
 
-                    <DropdownMenuContent
-                        align="end"
-                        className="bg-gray-800 text-gray-100 border border-gray-700"
-                    >
-                        <DropdownMenuLabel>Aktionen</DropdownMenuLabel>
+                            <DropdownMenuItem
+                                onClick={() => onEdit(project)}
+                                className="focus:bg-gray-700 cursor-pointer"
+                            >
+                                <Pencil className="h-4 w-4 mr-2" />
+                                Bearbeiten
+                            </DropdownMenuItem>
 
-                        <DropdownMenuItem
-                            onClick={() => onEdit(project)}
-                            className="focus:bg-gray-700 cursor-pointer"
-                        >
-                            <Pencil className="h-4 w-4 mr-2" />
-                            Bearbeiten
-                        </DropdownMenuItem>
+                            <DropdownMenuSeparator />
 
-                        <DropdownMenuSeparator />
-
-                        <DropdownMenuItem
-                            onClick={() => onDelete(project)}
-                            className="text-red-400 focus:bg-red-900 cursor-pointer"
-                        >
-                            <Trash className="h-4 w-4 mr-2" />
-                            Löschen
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                            <DropdownMenuItem
+                                onClick={() => onDelete(project)}
+                                className="text-red-400 focus:bg-red-900 cursor-pointer"
+                            >
+                                <Trash className="h-4 w-4 mr-2" />
+                                Löschen
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
             );
         },
     },

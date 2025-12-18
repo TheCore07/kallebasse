@@ -2,6 +2,8 @@ import {Navigate, Outlet} from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { Toaster } from "@/components/ui/sonner.tsx";
+import { AppConf } from "../../AppConf.ts";
 
 export default function Layout() {
     const { user, loading } = useAuth();
@@ -13,11 +15,23 @@ export default function Layout() {
         <SidebarProvider>
             <div className="flex min-h-screen w-full">
                 <AppSidebar />
+                <Toaster />
 
-                {/* Hauptinhalt füllt Rest der Seite */}
-                <main className="flex-1 p-6">
-                    <SidebarTrigger />
-                    <Outlet />
+                <main className="flex flex-col flex-1 p-6">
+                    {/* Header */}
+                    <div className="mb-4">
+                        <SidebarTrigger />
+                    </div>
+
+                    {/* Page Content */}
+                    <div className="flex-1 overflow-auto">
+                        <Outlet />
+                    </div>
+
+                    {/* Footer */}
+                    <footer className="mt-4 flex justify-end text-sm text-gray-600">
+                        <span>{AppConf.AppVersion}</span>
+                    </footer>
                 </main>
             </div>
         </SidebarProvider>

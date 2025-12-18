@@ -3,8 +3,8 @@ import {Plus, Book, } from "lucide-react";
 import {useEffect, useState} from "react";
 import {DataTable} from "@/pages/projects/data-table.tsx";
 import { columns } from "@/pages/projects/columns.tsx";
-import type {Project} from "@/types/Project.ts";
-import {deleteProject, getProjects, updateProject} from "@/api/projects.ts";
+import type {NewProject, Project} from "@/types/Project.ts";
+import {createProject, deleteProject, getProjects, updateProject} from "@/api/projects.ts";
 import {
     Dialog,
     DialogClose,
@@ -19,11 +19,23 @@ import {Input} from "@/components/ui/input.tsx";
 
 export default function Projects() {
     const [selected, setSelected] = useState<Project | null>(null);
-    // const [isCreateOpen, setIsCreateOpen] = useState(false);
+    const [isCreateOpen, setIsCreateOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
     const [projects, setProjects] = useState<Project[]>([]);
     const [search, setSearch] = useState<string>("");
 
+    const [newProject, setNewProject] = useState<NewProject>({
+        title: "",
+        description: ""
+    });
+
+    const handleCreate = async () => {
+        const res = await createProject(newProject);
+
+        if (res.status === 200 || res.status === 201) {
+            await loadProjects();
+        }
+    }
 
     const loadProjects = async () => {
         const res = await getProjects();
@@ -68,6 +80,53 @@ export default function Projects() {
 
     return (
         <>
+            {/* Create Dialog */}
+            <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
+                <DialogContent className="sm:max-w-[450px] bg-gray-800 text-gray-100 border border-gray-700 rounded-xl shadow-lg">
+                    <form className="grid gap-4" onSubmit={handleCreate}>
+                        <DialogHeader>
+                            <DialogTitle>Neues Projekt</DialogTitle>
+                            <DialogDescription>
+                                Erstelle ein neues Projekt.
+                            </DialogDescription>
+                        </DialogHeader>
+
+                        <div className="grid gap-3">
+                            <Label htmlFor="title">Titel</Label>
+                            <Input
+                                id="title"
+                                value={newProject.title}
+                                onChange={(e) =>
+                                    setNewProject({ ...newProject, title: e.target.value })
+                                }
+                                placeholder="Kurzer Titel"
+                                required
+                            />
+                        </div>
+
+                        <div className="grid gap-3">
+                            <Label htmlFor="description">Beschreibung</Label>
+                            <Input
+                                id="description"
+                                value={newProject.description}
+                                onChange={(e) =>
+                                    setNewProject({ ...newProject, description: e.target.value })
+                                }
+                                placeholder="Beschreibe dein Problem..."
+                                required
+                            />
+                        </div>
+
+                        <DialogFooter className="mt-2">
+                            <DialogClose asChild>
+                                <Button variant="default" className="bg-red-500 hover:bg-red-600 hover:text-white cursor-pointer">Abbrechen</Button>
+                            </DialogClose>
+                            <Button type="submit" className="bg-green-500 hover:bg-green-600 cursor-pointer">Erstellen</Button>
+                        </DialogFooter>
+                    </form>
+                </DialogContent>
+            </Dialog>
+
             <Dialog open={isEditOpen} onOpenChange={closeEdit}>
                 <DialogContent className="bg-gray-800 text-gray-100 border border-gray-700 rounded-xl">
                     {selected && (
@@ -135,16 +194,17 @@ export default function Projects() {
                 {/* FILTER + TABLE */}
                 <div className="bg-gray-800 border border-gray-700 p-4 rounded-xl shadow-lg space-y-4">
                     {/* Search Input */}
-                    <div>
-                        <input
+                    <div className="flex gap-3">
+                        <Input
                             type="text"
                             placeholder="Suchen..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="w-full p-2 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            className="flex-1 p-2 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         />
                         <Button
                             className="flex items-center gap-2 bg-green-600 hover:bg-green-700 cursor-pointer"
+                            onClick={() => setIsCreateOpen(true)}
                         >
                             <Plus className="h-5 w-5" />
                             Neu

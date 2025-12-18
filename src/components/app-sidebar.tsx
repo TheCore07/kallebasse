@@ -10,7 +10,8 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from "@/components/ui/dropdown-menu.tsx";
 import { SideBarItems } from "@/components/SideBarConf.tsx";
 import { useAuth } from "@/context/AuthContext.tsx";
-import {Bell, CreditCard, LogOut, User, CircleUserRound } from "lucide-react";
+import {Bell, LogOut, User, CircleUserRound } from "lucide-react";
+import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
 export function AppSidebar() {
@@ -73,11 +74,7 @@ export function AppSidebar() {
                                 <User className="mr-2 h-4 w-4" />
                                 Account
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <CreditCard className="mr-2 h-4 w-4" />
-                                Billing
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => toast("This function will be implemented in a late release")}>
                                 <Bell className="mr-2 h-4 w-4" />
                                 Notifications
                             </DropdownMenuItem>

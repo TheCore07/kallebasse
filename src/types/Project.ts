@@ -7,3 +7,8 @@ export type Project = {
     creator_id: string;
     creator_name: string;
 }
+
+export type NewProject = {
+    title: string;
+    description: string;
+}

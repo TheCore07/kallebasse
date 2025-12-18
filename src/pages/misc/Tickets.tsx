@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { useAuth } from "@/context/AuthContext";
 
 export default function Tickets() {
@@ -190,45 +191,53 @@ export default function Tickets() {
                     </Button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto space-y-4 pr-1">
-                    {tickets.map((entry, i) => (
-                        <motion.div
-                            key={entry._id}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: i * 0.05 }}
-                            onClick={() => setSelected(entry)}
-                            className="bg-gray-800 border border-gray-700 rounded-xl p-5 hover:bg-gray-700 transition cursor-pointer"
-                        >
-                            <div className="flex items-start justify-between mb-1">
-                                <h2 className="text-lg font-semibold text-white">{entry.title}</h2>
+                <ScrollArea className="h-[600px] rounded-md border border-gray-700">
+                    <div className="space-y-4 pr-3">
+                        {tickets.map((entry, i) => (
+                            <motion.div
+                                key={entry._id}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: i * 0.05 }}
+                                onClick={() => setSelected(entry)}
+                                className="bg-gray-800 border border-gray-700 rounded-xl p-5 hover:bg-gray-700 transition cursor-pointer"
+                            >
+                                <div className="flex items-start justify-between mb-1">
+                                    <h2 className="text-lg font-semibold text-white">
+                                        {entry.title}
+                                    </h2>
 
-                                <div className="flex flex-col items-end">
-                                    <span className="text-sm text-gray-400">{entry.creator_name}</span>
-                                    <span className="text-xs text-gray-500">
-                                        {new Date(entry.createdAt).toLocaleDateString()}
-                                    </span>
+                                    <div className="flex flex-col items-end">
+                        <span className="text-sm text-gray-400">
+                            {entry.creator_name}
+                        </span>
+                                        <span className="text-xs text-gray-500">
+                            {new Date(entry.createdAt).toLocaleDateString()}
+                        </span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <p className="text-sm text-gray-400 mt-2">{entry.description}</p>
+                                <p className="text-sm text-gray-400 mt-2">
+                                    {entry.description}
+                                </p>
 
-                            {user?.role === "Admin" && (
-                                <div className="flex justify-end mt-4">
-                                    <Button
-                                        onClick={async (e) => {
-                                            e.stopPropagation();
-                                            await handleDelete(entry._id);
-                                        }}
-                                        className="bg-red-600 hover:bg-red-700 p-2 rounded-md cursor-pointer"
-                                    >
-                                        <Trash2 className="h-5 w-5" />
-                                    </Button>
-                                </div>
-                            )}
-                        </motion.div>
-                    ))}
-                </div>
+                                {user?.role === "Admin" && (
+                                    <div className="flex justify-end mt-4">
+                                        <Button
+                                            onClick={async (e) => {
+                                                e.stopPropagation();
+                                                await handleDelete(entry._id);
+                                            }}
+                                            className="bg-red-600 hover:bg-red-700 p-2 rounded-md cursor-pointer"
+                                        >
+                                            <Trash2 className="h-5 w-5" />
+                                        </Button>
+                                    </div>
+                                )}
+                            </motion.div>
+                        ))}
+                    </div>
+                </ScrollArea>
             </div>
         </>
     );
